@@ -1,0 +1,234 @@
+/* Custom styles for MicroChasers - Corporate Black and White Theme */
+
+:root {
+    --bs-body-bg: #1a1a1a;
+    --bs-body-color: #e0e0e0;
+    --bs-border-color: #444;
+    --bs-secondary-bg: #2b2b2b;
+}
+
+body {
+    font-family: "Courier New", Courier, monospace;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+/* --- Navbar --- */
+.navbar.bg-light {
+    background-color: #222222 !important; /* A neutral dark gray */
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.navbar-brand, .nav-link {
+    color: #ecf0f1 !important; /* A light, off-white */
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #ffffff !important;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* --- Forms --- */
+.form-control {
+    background-color: #2b2b2b;
+    color: var(--bs-body-color);
+    border: 1px solid var(--bs-border-color);
+}
+
+.form-control:focus {
+    background-color: #3c3c3c;
+    color: var(--bs-body-color);
+    border-color: #555;
+    box-shadow: none;
+}
+
+.form-control::placeholder {
+    color: #888;
+}
+
+.form-check-input {
+    background-color: #2b2b2b;
+    border-color: var(--bs-border-color);
+}
+
+.form-check-input:checked {
+    background-color: #5a5a5a;
+    border-color: #777;
+}
+
+/* --- Buttons --- */
+.btn-primary {
+    background-color: #e0e0e0;
+    color: #1a1a1a;
+    border: 1px solid #e0e0e0;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffffff;
+}
+
+/* --- Links --- */
+a {
+    color: #bdc3c7; /* A light gray-blue */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #ecf0f1;
+    text-decoration: underline;
+}
+
+/* --- General Content --- */
+h2 {
+    color: #ffffff;
+    border-bottom: 2px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- Alerts --- */
+.alert {
+    background-color: var(--bs-secondary-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+}
+
+.alert-info {
+     background-color: #333333;
+     border-color: #444444;
+     color: #ecf0f1;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* --- Background Animation --- */
+#background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* On pages with the animation, add a background to the form area for legibility */
+.auth-page .row {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(26, 26, 26, 0.7);
+    padding: 2rem;
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+#background-animation::before, #background-animation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+}
+
+#background-animation::before {
+    width: 2px;
+    height: 2px;
+    background: white;
+    box-shadow:
+        5vw 10vh 0px 0px #fff, 15vw 30vh 1px 1px #fff, 25vw 50vh 0px 1px #fff,
+        35vw 70vh 1px 0px #fff, 45vw 90vh 0px 0px #fff, 55vw 20vh 1px 1px #fff,
+        65vw 40vh 0px 1px #fff, 75vw 60vh 1px 0px #fff, 85vw 80vh 0px 0px #fff,
+        95vw 10vh 1px 1px #fff, 2vw 85vh 1px 1px #fff, 98vw 45vh 0px 1px #fff;
+    animation: float 25s linear infinite;
+}
+
+#background-animation::after {
+    width: 3px;
+    height: 3px;
+    background: white;
+    box-shadow:
+        10vw 85vh 1px 1px #fff, 20vw 5vh 0px 1px #fff, 30vw 35vh 1px 0px #fff,
+        40vw 65vh 0px 0px #fff, 50vw 95vh 1px 1px #fff, 60vw 15vh 0px 1px #fff,
+        70vw 45vh 1px 0px #fff, 80vw 75vh 0px 0px #fff, 90vw 55vh 1px 1px #fff,
+        5vw 45vh 0px 1px #fff, 88vw 25vh 1px 0px #fff, 43vw 5vh 0px 0px #fff;
+    animation: float 35s linear infinite;
+    animation-delay: -5s; /* Start at a different point in the animation */
+}
+
+/* Ensure the main content is above the animation */
+main.container {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Global Component Theming --- */
+
+/* Jumbotron / Hero unit */
+.bg-light {
+    background-color: var(--bs-secondary-bg) !important;
+}
+
+/* List Group */
+.list-group-item {
+    background-color: var(--bs-secondary-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+}
+
+.list-group-item-action:hover, .list-group-item-action:focus {
+    background-color: #3c3c3c;
+    color: #ffffff;
+}
+
+/* Secondary Buttons */
+.btn-outline-secondary {
+    color: #ccc;
+    border-color: #555;
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #555;
+    border-color: #555;
+}
+
+/* General utilities */
+.border-bottom {
+    border-color: var(--bs-border-color) !important;
+}
+
+.alert-link {
+    color: #ffffff;
+    font-weight: bold;
+}
