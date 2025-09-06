@@ -59,6 +59,7 @@ def sample(id):
         if processed_image_path:
             processed_filename = os.path.basename(processed_image_path)
             new_image.filepath = f'uploads/{processed_filename}'
+            db.session.add(new_image) # Ensure the change is staged for commit
 
         # Save detections
         for det in detections:
