@@ -57,19 +57,14 @@
                     <img src="{{ url_for('static', filename=image.filepath) }}" class="card-img-top" alt="Sample image">
                     <div class="card-body">
                         <h5 class="card-title">Image taken at: {{ image.timestamp.strftime('%Y-%m-%d %H:%M') }}</h5>
-                        <h6>Detections:</h6>
-                        {% if image.detections.all() %}
-                            <ul class="list-unstyled">
-                            {% for detection in image.detections.all() %}
-                                <li>
-                                    <span class="badge bg-success">Particle</span> at ({{ detection.x_coordinate }}, {{ detection.y_coordinate }})
-                                    with confidence {{ "%.1f"|format(detection.confidence * 100) }}%
-                                </li>
-                            {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p class="card-text">No microplastics detected in this image.</p>
-                        {% endif %}
+                        <p class="card-text">
+                            {% if image.detections.count() > 0 %}
+                                {{ image.detections.count() }} detections.
+                                <a href="{{ url_for('main.dashboard', image_id=image.id) }}" class="btn btn-primary">View Dashboard</a>
+                            {% else %}
+                                No microplastics detected in this image.
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>

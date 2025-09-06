@@ -2,11 +2,9 @@ from flask import render_template, flash, redirect, url_for, request, current_ap
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
-from app.main import bp
-from flask import render_template, flash, redirect, url_for, request, current_app
-from flask_login import login_required, current_user
-from werkzeug.utils import secure_filename
-import os
+import json
+from collections import Counter
+import numpy as np
 from app.main import bp
 from app.main.forms import SampleForm, ImageUploadForm
 from app.models import Sample, Image, Detection
@@ -66,7 +64,9 @@ def sample(id):
             detection = Detection(
                 x_coordinate=det['x'],
                 y_coordinate=det['y'],
-                confidence=det['confidence'],
+                size=det['size'],
+                shape=det['shape'],
+                color=det['color'],
                 image=new_image
             )
             db.session.add(detection)
@@ -84,3 +84,43 @@ def sample(id):
 def samples():
     samples = current_user.samples.order_by(Sample.timestamp.desc()).all()
     return render_template('samples.html', title='My Samples', samples=samples)
+
+@bp.route('/dashboard/<int:image_id>')
+@login_required
+def dashboard(image_id):
+    image = Image.query.get_or_404(image_id)
+    if image.sample.author != current_user:
+        flash('You are not authorized to view this dashboard.')
+        return redirect(url_for('main.index'))
+
+    detections = image.detections.all()
+
+    # Prepare data for tables
+    total_particles = len(detections)
+
+    # Shape distribution
+    shapes = [d.shape for d in detections]
+    shape_counts = Counter(shapes)
+
+    # Size distribution
+    sizes = [d.size for d in detections]
+    size_stats = {
+        'min': min(sizes) if sizes else 0,
+        'max': max(sizes) if sizes else 0,
+        'avg': np.mean(sizes) if sizes else 0
+    }
+
+
+    # Color analysis
+    colors = [d.color for d in detections]
+    color_counts = Counter(colors)
+
+
+    return render_template('dashboard.html',
+                           title='Analysis Dashboard',
+                           image=image,
+                           total_particles=total_particles,
+                           shape_counts=shape_counts,
+                           size_stats=size_stats,
+                           color_counts=color_counts,
+                           detections=detections)
