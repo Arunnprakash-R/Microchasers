@@ -54,7 +54,9 @@ class Detection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     x_coordinate = db.Column(db.Integer)
     y_coordinate = db.Column(db.Integer)
-    confidence = db.Column(db.Float)
+    size = db.Column(db.Float)
+    shape = db.Column(db.String(50))
+    color = db.Column(db.String(7))
     image_id = db.Column(db.Integer, db.ForeignKey('image.id'))
 
     def __repr__(self):
