@@ -77,7 +77,21 @@ def sample(id):
         return redirect(url_for('main.sample', id=id))
 
     images = sample.images.order_by(Image.timestamp.desc()).all()
-    return render_template('sample.html', title=sample.name, sample=sample, form=form, images=images)
+    images_with_stats = []
+    for image in images:
+        detections = image.detections.all()
+        if detections:
+            sizes = [d.size for d in detections]
+            size_stats = {
+                'min': min(sizes),
+                'max': max(sizes),
+                'avg': np.mean(sizes)
+            }
+        else:
+            size_stats = {'min': 0, 'max': 0, 'avg': 0}
+        images_with_stats.append({'image': image, 'stats': size_stats})
+
+    return render_template('sample.html', title=sample.name, sample=sample, form=form, images_with_stats=images_with_stats)
 
 @bp.route('/samples')
 @login_required

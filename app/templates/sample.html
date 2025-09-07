@@ -50,21 +50,27 @@
 
     <h3>Uploaded Images</h3>
     <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% if images %}
-            {% for image in images %}
+        {% if images_with_stats %}
+            {% for item in images_with_stats %}
             <div class="col">
-                <div class="card">
-                    <img src="{{ url_for('static', filename=image.filepath) }}" class="card-img-top" alt="Sample image">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename=item.image.filepath) }}" class="card-img-top" alt="Sample image">
                     <div class="card-body">
-                        <h5 class="card-title">Image taken at: {{ image.timestamp.strftime('%Y-%m-%d %H:%M') }}</h5>
-                        <p class="card-text">
-                            {% if image.detections.count() > 0 %}
-                                {{ image.detections.count() }} detections.
-                                <a href="{{ url_for('main.dashboard', image_id=image.id) }}" class="btn btn-primary">View Dashboard</a>
-                            {% else %}
-                                No microplastics detected in this image.
-                            {% endif %}
-                        </p>
+                        <h5 class="card-title">Image taken at: {{ item.image.timestamp.strftime('%Y-%m-%d %H:%M') }}</h5>
+                        {% if item.image.detections.count() > 0 %}
+                            <p class="card-text">
+                                <strong>Illuminated Plastics:</strong> {{ item.image.detections.count() }}
+                            </p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Avg. Size: {{ "%.2f"|format(item.stats.avg) }} pixels</li>
+                                <li class="list-group-item">Size Range: {{ item.stats.min }} - {{ item.stats.max }} pixels</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <a href="{{ url_for('main.dashboard', image_id=item.image.id) }}" class="btn btn-primary">View Dashboard</a>
+                            </div>
+                        {% else %}
+                            <p class="card-text">No microplastics detected in this image.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
