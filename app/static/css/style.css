@@ -1,6 +1,8 @@
-/* Custom styles for MicroChasers - Corporate Black and White Theme */
+/* Custom styles for MicroChasers - Enhanced Theme */
 
 :root {
+    --bs-primary: #00a99d; /* A vibrant teal */
+    --bs-primary-rgb: 0, 169, 157;
     --bs-body-bg: #1a1a1a;
     --bs-body-color: #e0e0e0;
     --bs-border-color: #444;
@@ -8,7 +10,7 @@
 }
 
 body {
-    font-family: "Courier New", Courier, monospace;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background-color: var(--bs-body-bg);
     color: var(--bs-body-color);
 }
@@ -25,7 +27,7 @@ body {
 }
 
 .nav-link:hover {
-    color: #ffffff !important;
+    color: var(--bs-primary) !important;
 }
 
 .navbar-toggler-icon {
@@ -42,8 +44,8 @@ body {
 .form-control:focus {
     background-color: #3c3c3c;
     color: var(--bs-body-color);
-    border-color: #555;
-    box-shadow: none;
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
 }
 
 .form-control::placeholder {
@@ -56,35 +58,36 @@ body {
 }
 
 .form-check-input:checked {
-    background-color: #5a5a5a;
-    border-color: #777;
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
 }
 
 /* --- Buttons --- */
 .btn-primary {
-    background-color: #e0e0e0;
-    color: #1a1a1a;
-    border: 1px solid #e0e0e0;
+    background-color: var(--bs-primary);
+    color: #ffffff;
+    border: 1px solid var(--bs-primary);
     font-weight: bold;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 .btn-primary:hover {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid #ffffff;
+    background-color: #00c2b2; /* A slightly lighter teal for hover */
+    color: #ffffff;
+    border: 1px solid #00c2b2;
+    box-shadow: 0 0 10px rgba(var(--bs-primary-rgb), 0.5);
 }
 
 /* --- Links --- */
 a {
-    color: #bdc3c7; /* A light gray-blue */
+    color: var(--bs-primary);
     text-decoration: none;
     transition: color 0.2s;
 }
 
 a:hover {
-    color: #ecf0f1;
-    text-decoration: underline;
+    color: #00c2b2;
+    text-decoration: none;
 }
 
 /* --- General Content --- */
@@ -230,5 +233,30 @@ main.container {
 
 .alert-link {
     color: #ffffff;
+    font-weight: bold;
+}
+
+/* --- Card Enhancements --- */
+.card {
+    background-color: var(--bs-secondary-bg);
+    border: 1px solid var(--bs-border-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 15px rgba(var(--bs-primary-rgb), 0.3);
+}
+
+.card .list-group-item {
+    background-color: transparent; /* Make list group items inherit card background */
+    border-color: var(--bs-border-color);
+}
+
+h3 {
+    color: #ffffff;
+    border-bottom: 2px solid var(--bs-primary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
     font-weight: bold;
 }
